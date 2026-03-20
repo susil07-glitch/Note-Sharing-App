@@ -4,6 +4,7 @@ import express from "express";
 import noteRoute from "./src/note/noteRoutes";
 import globalErrorHndling from "./src/MiddleWares/globalErrorHandling";
 import authRoutes from "./src/User/AuthRoutes";
+import cors from 'cors'
 
 const app = express();
 //middleware
@@ -13,12 +14,17 @@ app.use(globalErrorHndling);
 //database call
 connectToDatabase();
 
+// cors validation //
+app.use(cors({
+  origin : envConfig.frontendUrl
+
+}))
+
 //api route
 app.use("/api/notes", noteRoute);
 
 
 // auth rotes //
-
 
 app.use("/api/notes",authRoutes);
 
